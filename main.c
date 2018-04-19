@@ -8,12 +8,31 @@
 #include <stdio.h>
 #include <string.h>
 
+void opening(){
+		printf("/*****************/\n");
+		printf("|~ Jogo da Forca ~|\n");
+		printf("/*****************/\n\n");
+	}
+
+void guessing(char guesses[], int attempts){
+	attempts = 0;
+	char guess;
+	//guesses[30];
+	printf("Chute uma letra: ");
+	fflush(stdout);
+	scanf(" %c", &guess);
+	fflush(stdout);
+	guesses[attempts] = guess;
+	attempts++;
+}
+
 int main(){
 
-	int attempts = 0;
+	opening();
+
 	int hit = 0;
 	int hang = 0;
-
+	int attempts = 0;
 	char guess;
 	char all_guesses[30];
 	char secret_word[30];
@@ -45,13 +64,8 @@ int main(){
 		printf("\n");
 		fflush(stdout);
 
-		printf("Chute uma letra: ");
-		fflush(stdout);
-		scanf(" %c", &guess);
-		fflush(stdout);
+		guessing(all_guesses, attempts);
 
-		all_guesses[attempts] = guess;
-		attempts++;
 
 		/*for(; i < strlen(secret_word); i++){ //diz a posição e se existe a letra!
 			if(secret_word[i] == guess){
