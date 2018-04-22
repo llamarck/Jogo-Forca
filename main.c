@@ -7,6 +7,12 @@
 
 #include <stdio.h>
 #include <string.h>
+//includes
+
+int attempts = 0;
+char all_guesses[30];
+char secret_word[30];
+//declaração de funções globais
 
 void opening(){
 		printf("/*****************/\n");
@@ -14,26 +20,26 @@ void opening(){
 		printf("/*****************/\n\n");
 }
 
-void choose_word(char * secret_word){
+void choose_word(){
 	sprintf(secret_word, "developer");
 }
 
-void guessing(char guesses[], int *attempts){
+void guessing(){
 	char guess;
 	//guesses[30];
 	printf("Chute uma letra: ");
 	fflush(stdout);
 	scanf(" %c", &guess);
 	fflush(stdout);
-	guesses[*attempts] = guess;
-	(*attempts)++;
+	all_guesses[attempts] = guess;
+	attempts++;
 }
 
-int alreadyGuessed(char letter, char * guesses, int attempts){
+int alreadyGuessed(char letter){
 	int j = 0;
 	int found = 0;
 	for (; j < attempts; j++){
-		if(guesses[j] == letter){
+		if(all_guesses[j] == letter){
 			found = 1;
 			break;
 		}
@@ -41,13 +47,13 @@ int alreadyGuessed(char letter, char * guesses, int attempts){
 	return found;
 }
 
-void draw(char * secret_word, char * all_guesses, int attempts){
+void draw(){
 	int i;
 	printf("Você já deu %d chutes!\n", attempts);
 	fflush(stdout);
 	for (i = 0; i < strlen(secret_word); i++){
 
-				if(alreadyGuessed(secret_word[i], all_guesses, attempts)){
+				if(alreadyGuessed(secret_word[i])){
 					printf("%c ", secret_word[i]);
 				}else{
 					printf("_ ");
@@ -63,13 +69,10 @@ int main(){
 	int found = 0;
 	int hit = 0;
 	int hang = 0;
-	int attempts = 0;
 	//char guess;
-	char all_guesses[30];
-	char secret_word[30];
 
 	opening();
-	choose_word(secret_word);
+	choose_word();
 
 
 	do {
