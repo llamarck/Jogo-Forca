@@ -27,9 +27,9 @@ void choose_word(){
 int hang(){
 	int errors = 0;
 	int i;
+	int j;
 	for (i = 0; i < attempts; i++){
 		int exists = 0;
-		int j;
 		for (j = 0; j < strlen(secret_word); j++){
 			if(all_guesses[i] == secret_word[j]){
 				exists = 1;
@@ -40,7 +40,7 @@ int hang(){
 			errors++;
 		}
 	}
-	return >= 5;
+	return errors >= 5;
 
 }
 
@@ -88,7 +88,6 @@ int main(){
 
 	int found = 0;
 	int hit = 0;
-	int hang = 0;
 	//char guess;
 
 	opening();
@@ -106,7 +105,7 @@ int main(){
 			}
 		}*/
 
-	} while(!hit && !hang); //executa isto enquanto não tiver acertado ou sido enforcado
+	} while(!hit && !hang()); //executa isto enquanto não tiver acertado ou sido enforcado
 
 	return 0;
 }
