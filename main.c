@@ -24,6 +24,26 @@ void choose_word(){
 	sprintf(secret_word, "developer");
 }
 
+int hang(){
+	int errors = 0;
+	int i;
+	for (i = 0; i < attempts; i++){
+		int exists = 0;
+		int j;
+		for (j = 0; j < strlen(secret_word); j++){
+			if(all_guesses[i] == secret_word[j]){
+				exists = 1;
+				break;
+			}
+		}
+		if(!exists){
+			errors++;
+		}
+	}
+	return >= 5;
+
+}
+
 void guessing(){
 	char guess;
 	//guesses[30];
