@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include "forca.h"
 //includes
 
 int attempts = 0;
@@ -20,28 +21,8 @@ void opening(){
 		printf("/*****************/\n\n");
 }
 
-void choose_word(){
+void chooseWord(){
 	sprintf(secret_word, "developer");
-}
-
-int hang(){
-	int errors = 0;
-	int i;
-	int j;
-	for (i = 0; i < attempts; i++){
-		int exists = 0;
-		for (j = 0; j < strlen(secret_word); j++){
-			if(all_guesses[i] == secret_word[j]){
-				exists = 1;
-				break;
-			}
-		}
-		if(!exists){
-			errors++;
-		}
-	}
-	return errors >= 5;
-
 }
 
 void guessing(){
@@ -67,6 +48,37 @@ int alreadyGuessed(char letter){
 	return found;
 }
 
+int hang(){
+	int errors = 0;
+	int i;
+	int j;
+	for (i = 0; i < attempts; i++){
+		int exists = 0;
+		for (j = 0; j < strlen(secret_word); j++){
+			if(all_guesses[i] == secret_word[j]){
+				exists = 1;
+				break;
+			}
+		}
+		if(!exists){
+			errors++;
+		}
+	}
+	return errors >= 5;
+
+}
+
+int win(){
+	int i;
+	for (i = 0; i < strlen(secret_word); i++){
+		if(!alreadyGuessed(secret_word[i])){
+			return 0;
+		}
+	}
+
+	return 1;
+}
+
 void draw(){
 	int i;
 	printf("Você já deu %d chutes!\n", attempts);
@@ -85,13 +97,10 @@ void draw(){
 
 int main(){
 
-
 	int found = 0;
-	int hit = 0;
-	//char guess;
 
 	opening();
-	choose_word();
+	chooseWord();
 
 
 	do {
@@ -105,7 +114,7 @@ int main(){
 			}
 		}*/
 
-	} while(!hit && !hang()); //executa isto enquanto não tiver acertado ou sido enforcado
+	} while(!win() && !hang()); //executa isto enquanto não tiver acertado ou sido enforcado
 
 	return 0;
 }
