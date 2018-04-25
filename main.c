@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <time.h>
 #include "forca.h"
 //includes
 
@@ -22,7 +23,29 @@ void opening(){
 }
 
 void chooseWord(){
-	sprintf(secret_word, "developer");
+	int number_words;
+	FILE* f; //declara o ponteiro
+	f = fopen("words.txt", "r"); //passa o arquivo e o modo (reading, no caso)
+	//sprintf(secret_word, "developer");
+	if(f == 0){
+		printf("Banco de dados de palavras não disponível.\n\n");
+		fflush(stdout);
+		exit(1);
+	}
+	fscanf(f, "%d", &number_words);
+	fflush(stdout);
+
+	srand(time(0));
+	int random = rand() % number_words;
+
+	int i;
+	for(i = 0; i <= random; i++){
+		fscanf(f, "%s", secret_word);
+		fflush(stdout);
+	}
+	fclose(f);
+	/*char word[50];
+	fscanf(f, "%s", word);*/
 }
 
 void guessing(){
