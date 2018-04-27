@@ -5,6 +5,7 @@
  *      Author: Léo
  */
 
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
@@ -15,61 +16,6 @@ int attempts = 0;
 char all_guesses[30];
 char secret_word[30];
 //declaração de funções globais
-
-void opening(){
-		printf("/*****************/\n");
-		printf("|~ Jogo da Forca ~|\n");
-		printf("/*****************/\n\n");
-}
-
-void chooseWord(){
-	int number_words;
-	FILE* f; //declara o ponteiro
-	f = fopen("words.txt", "r"); //passa o arquivo e o modo (reading, no caso)
-	//sprintf(secret_word, "developer");
-	if(f == 0){
-		printf("Banco de dados de palavras não disponível.\n\n");
-		fflush(stdout);
-		exit(1);
-	}
-	fscanf(f, "%d", &number_words);
-	fflush(stdout);
-
-	srand(time(0));
-	int random = rand() % number_words;
-
-	int i;
-	for(i = 0; i <= random; i++){
-		fscanf(f, "%s", secret_word);
-		fflush(stdout);
-	}
-	fclose(f);
-	/*char word[50];
-	fscanf(f, "%s", word);*/
-}
-
-void guessing(){
-	char guess;
-	//guesses[30];
-	printf("Chute uma letra: ");
-	fflush(stdout);
-	scanf(" %c", &guess);
-	fflush(stdout);
-	all_guesses[attempts] = guess;
-	attempts++;
-}
-
-int alreadyGuessed(char letter){
-	int j = 0;
-	int found = 0;
-	for (; j < attempts; j++){
-		if(all_guesses[j] == letter){
-			found = 1;
-			break;
-		}
-	}
-	return found;
-}
 
 int hang(){
 	int errors = 0;
@@ -102,6 +48,35 @@ int win(){
 	return 1;
 }
 
+void opening(){
+		printf("/*****************/\n");
+		printf("|~ Jogo da Forca ~|\n");
+		printf("/*****************/\n\n");
+}
+
+void guessing(){
+	char guess;
+	//guesses[30];
+	printf("Chute uma letra: ");
+	fflush(stdout);
+	scanf(" %c", &guess);
+	fflush(stdout);
+	all_guesses[attempts] = guess;
+	attempts++;
+}
+
+int alreadyGuessed(char letter){
+	int j;
+	int found = 0;
+	for (j = 0; j < attempts; j++){
+		if(all_guesses[j] == letter){
+			found = 1;
+			break;
+		}
+	}
+	return found;
+}
+
 void draw(){
 	int i;
 	printf("Você já deu %d chutes!\n", attempts);
@@ -110,25 +85,89 @@ void draw(){
 
 				if(alreadyGuessed(secret_word[i])){
 					printf("%c ", secret_word[i]);
+					fflush(stdout);
 				}else{
 					printf("_ ");
+					fflush(stdout);
 				}
 			}
 
 	printf("\n");
+	fflush(stdout);
+}
+
+void chooseWord(){
+	int number_words;
+	FILE* f; //declara o ponteiro
+	f = fopen("words.txt", "r"); //passa o arquivo e o modo (reading, no caso)
+	//sprintf(secret_word, "developer");
+	if(f == 0){
+		printf("Banco de dados de palavras não disponível.\n\n");
+		fflush(stdout);
+		exit(1);
+	}
+	fscanf(f, "%d", &number_words);
+	fflush(stdout);
+
+	srand(time(0));
+	int random = rand() % number_words;
+
+	int i;
+	for(i = 0; i <= random; i++){
+		fscanf(f, "%s", secret_word);
+		fflush(stdout);
+	}
+	fclose(f);
+	/*char word[50];
+	fscanf(f, "%s", word);*/
+}
+
+void addWord(){
+	char want;
+	printf("Você deseja adicionar alguma palavra no jogo(S/N)?");
+	fflush(stdout);
+	scanf("%c", &want);
+	fflush(stdout);
+
+	if(want == 'S'){
+		char new_word[20];
+		printf("Digite a nova palavra: ");
+		fflush(stdout);
+		scanf("%c", new_word);
+		fflush(stdout);
+
+		FILE* f;
+
+		f = fopen("words.txt", "r+"); //a stands for append
+		if(f == 0){
+			printf("Banco de palavras não disponível.\n\n");
+			exit(1);
+		}
+
+		int qtd;
+		fscanf(f, "%d", &qtd);
+		fflush(stdout);
+		qtd++;
+		fseek(f, 0, SEEK_SET);
+		fprintf(f, "%d", qtd);
+		fflush(stdout);
+
+		fseek(f, 0, SEEK_END);
+		fprintf(f, "\n%s", new_word);
+		fflush(stdout);
+		fclose(f);
+	}
 }
 
 int main(){
-
-	int found = 0;
 
 	opening();
 	chooseWord();
 
 
 	do {
-		draw(secret_word, all_guesses, attempts);
-		guessing(all_guesses, &attempts);
+		draw();
+		guessing();
 
 		/*for(; i < strlen(secret_word); i++){ //diz a posição e se existe a letra!
 			if(secret_word[i] == guess){
