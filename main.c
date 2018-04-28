@@ -17,9 +17,8 @@ char all_guesses[30];
 char secret_word[WORD_SIZE];
 //declaração de funções globais
 
-int letter_exists(char letter){
+int letterExists(char letter){
 	int j;
-
 	for (j = 0; j < strlen(secret_word); j++){
 		if (letter == secret_word[j]){
 			return 1;
@@ -28,11 +27,11 @@ int letter_exists(char letter){
 	return 0;
 }
 
-int wrong_attempts(){
+int wrongAttempts(){
 	int errors = 0;
 		int i;
 		for (i = 0; i < attempts; i++){
-			if(!letter_exists(all_guesses[i])){
+			if(!letterExists(all_guesses[i])){
 				errors++;
 			}
 		}
@@ -40,7 +39,7 @@ int wrong_attempts(){
 }
 
 int hang(){
-	return wrong_attempts() >= 5;
+	return wrongAttempts() >= 5;
 }
 
 int win(){
@@ -84,6 +83,7 @@ int alreadyGuessed(char letter){
 }
 
 void draw(){
+	int mistakes = wrongAttempts();
 	int i;
 	printf("Você já deu %d chutes!\n", attempts);
 	fflush(stdout);
@@ -101,14 +101,14 @@ void draw(){
 	printf("\n");
 	fflush(stdout);
 
-	printf(" _______ \n");
-	printf(" |/ |    \n");
-	printf(" | (_)   \n");
-	printf(" | \\|/  \n");
-	printf(" |  |    \n");
-	printf(" | / \\  \n");
-	printf(" |       \n");
-	printf("_|___    \n");
+	printf("  _______       \n");
+	printf(" |/      |      \n");
+	printf(" |      %c%c%c  \n", (mistakes>=1?'(':' '), (mistakes>=1?'_':' '), (mistakes>=1?')':' '));
+	printf(" |      %c%c%c  \n", (mistakes>=3?'\\':' '), (mistakes>=2?'|':' '), (mistakes>=3?'/': ' '));
+	printf(" |       %c     \n", (mistakes>=2?'|':' '));
+	printf(" |      %c %c   \n", (mistakes>=4?'/':' '), (mistakes>=4?'\\':' '));
+	printf(" |              \n");
+	printf("_|___           \n");
 	printf("\n\n");
 }
 
@@ -184,6 +184,7 @@ int main(){
 	do {
 		draw();
 		guessing();
+		draw();
 
 		/*for(; i < strlen(secret_word); i++){ //diz a posição e se existe a letra!
 			if(secret_word[i] == guess){
