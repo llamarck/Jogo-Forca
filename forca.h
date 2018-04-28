@@ -17,5 +17,8 @@ int alreadyGuessed(char letter);
 int win();
 void draw();
 void chooseWord();
+int letterExists(char letter);
+int wrongAttempts();
+void addWord();
 
 #endif /* FORCA_H_ */

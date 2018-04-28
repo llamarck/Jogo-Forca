@@ -66,6 +66,16 @@ void guessing(){
 	fflush(stdout);
 	scanf(" %c", &guess);
 	fflush(stdout);
+
+	if(letterExists(guess)){
+		printf("Você acertou! A palavra TEM %c!\n", guess);
+		fflush(stdout);
+	}else{
+		printf("Você errou! A palavra NÃO TEM %c!\n", guess);
+		fflush(stdout);
+
+	}
+
 	all_guesses[attempts] = guess;
 	attempts++;
 }
@@ -194,6 +204,8 @@ int main(){
 		}*/
 
 	} while(!win() && !hang()); //executa isto enquanto não tiver acertado ou sido enforcado
+
+	addWord();
 
 	return 0;
 }
