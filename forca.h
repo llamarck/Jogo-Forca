@@ -8,6 +8,8 @@
 #ifndef FORCA_H_
 #define FORCA_H_
 
+#define WORD_SIZE 20
+
 int hang();
 void opening();
 void guessing();

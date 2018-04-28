@@ -14,27 +14,33 @@
 
 int attempts = 0;
 char all_guesses[30];
-char secret_word[30];
+char secret_word[WORD_SIZE];
 //declaração de funções globais
 
-int hang(){
-	int errors = 0;
-	int i;
+int letter_exists(char letter){
 	int j;
-	for (i = 0; i < attempts; i++){
-		int exists = 0;
-		for (j = 0; j < strlen(secret_word); j++){
-			if(all_guesses[i] == secret_word[j]){
-				exists = 1;
-				break;
-			}
-		}
-		if(!exists){
-			errors++;
+
+	for (j = 0; j < strlen(secret_word); j++){
+		if (letter == secret_word[j]){
+			return 1;
 		}
 	}
-	return errors >= 5;
+	return 0;
+}
 
+int wrong_attempts(){
+	int errors = 0;
+		int i;
+		for (i = 0; i < attempts; i++){
+			if(!letter_exists(all_guesses[i])){
+				errors++;
+			}
+		}
+		return errors;
+}
+
+int hang(){
+	return wrong_attempts() >= 5;
 }
 
 int win(){
@@ -94,6 +100,16 @@ void draw(){
 
 	printf("\n");
 	fflush(stdout);
+
+	printf(" _______ \n");
+	printf(" |/ |    \n");
+	printf(" | (_)   \n");
+	printf(" | \\|/  \n");
+	printf(" |  |    \n");
+	printf(" | / \\  \n");
+	printf(" |       \n");
+	printf("_|___    \n");
+	printf("\n\n");
 }
 
 void chooseWord(){
@@ -130,7 +146,7 @@ void addWord(){
 	fflush(stdout);
 
 	if(want == 'S'){
-		char new_word[20];
+		char new_word[WORD_SIZE];
 		printf("Digite a nova palavra: ");
 		fflush(stdout);
 		scanf("%c", new_word);
