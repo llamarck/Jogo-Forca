@@ -150,7 +150,7 @@ void chooseWord(){
 
 void addWord(){
 	char want;
-	printf("Você deseja adicionar alguma palavra no jogo(S/N)?");
+	printf("Você deseja adicionar alguma palavra no jogo(S/N)? ");
 	fflush(stdout);
 	scanf("%c", &want);
 	fflush(stdout);
@@ -204,6 +204,43 @@ int main(){
 		}*/
 
 	} while(!win() && !hang()); //executa isto enquanto não tiver acertado ou sido enforcado
+
+	if(win()) {
+			printf("\nParabéns, você ganhou!\n\n");
+
+		    printf("       ___________      \n");
+		    printf("      '._==_==_=_.'     \n");
+		    printf("      .-\\:      /-.    \n");
+		    printf("     | (|:.     |) |    \n");
+		    printf("      '-|:.     |-'     \n");
+		    printf("        \\::.    /      \n");
+		    printf("         '::. .'        \n");
+		    printf("           ) (          \n");
+		    printf("         _.' '._        \n");
+		    printf("        '-------'       \n\n");
+
+		 }else{
+		    printf("\nVocê foi enforcado!\n");
+
+		    printf("A palavra era **%s**\n\n", secret_word);
+
+		    printf("    _______________         \n");
+		    printf("   /               \\       \n");
+		    printf("  /                 \\      \n");
+		    printf("//                   \\/\\  \n");
+		    printf("\\|   XXXX     XXXX   | /   \n");
+		    printf(" |   XXXX     XXXX   |/     \n");
+		    printf(" |   XXX       XXX   |      \n");
+		    printf(" |                   |      \n");
+		    printf(" \\__      XXX      __/     \n");
+		    printf("   |\\     XXX     /|       \n");
+		    printf("   | |           | |        \n");
+		    printf("   | I I I I I I I |        \n");
+		    printf("   |  I I I I I I  |        \n");
+		    printf("   \\_             _/       \n");
+		    printf("     \\_         _/         \n");
+		    printf("       \\_______/           \n");
+		 }
 
 	addWord();
 
