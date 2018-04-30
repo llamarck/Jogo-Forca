@@ -15,7 +15,27 @@
 int attempts = 0;
 char all_guesses[30];
 char secret_word[WORD_SIZE];
+int level;
 //declaração de funções globais
+
+void defineLevel(){
+	int lvl = 0;
+
+	printf("Selecione o nível de dificuldade\n");
+	fflush(stdout);
+	printf("FÁCIL (1)   NORMAL (2)   DIFÍCIL(3)\n");
+	fflush(stdout);
+	scanf("%d", &lvl);
+	fflush(stdout);
+
+	if(lvl == 1){
+		level = 5;
+	}else if(lvl == 2){
+		level = 3;
+	}else{
+		level = 1;
+	}
+}
 
 int letterExists(char letter){
 	int j;
@@ -39,7 +59,7 @@ int wrongAttempts(){
 }
 
 int hang(){
-	return wrongAttempts() >= 5;
+	return wrongAttempts() >= level;
 }
 
 int win(){
@@ -155,7 +175,7 @@ void addWord(){
 	scanf("%c", &want);
 	fflush(stdout);
 
-	if(want == 'S'){
+	if(want == 's'){
 		char new_word[WORD_SIZE];
 		printf("Digite a nova palavra: ");
 		fflush(stdout);
@@ -188,13 +208,13 @@ void addWord(){
 int main(){
 
 	opening();
+	defineLevel();
 	chooseWord();
 
 
 	do {
 		draw();
 		guessing();
-		draw();
 
 		/*for(; i < strlen(secret_word); i++){ //diz a posição e se existe a letra!
 			if(secret_word[i] == guess){
@@ -219,6 +239,8 @@ int main(){
 		    printf("         _.' '._        \n");
 		    printf("        '-------'       \n\n");
 
+			addWord();
+
 		 }else{
 		    printf("\nVocê foi enforcado!\n");
 
@@ -241,8 +263,6 @@ int main(){
 		    printf("     \\_         _/         \n");
 		    printf("       \\_______/           \n");
 		 }
-
-	addWord();
 
 	return 0;
 }
