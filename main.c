@@ -18,6 +18,18 @@ char secret_word[WORD_SIZE];
 int level;
 //declaração de funções globais
 
+int validateWord(char word[]){
+	int i;
+	for(i = 0; i <= strlen(word); i++){
+		if(((int)word[i] < 65) || ((int)word[i] > 90)){
+			break;
+			return 0;
+		}
+	}
+	return 1;
+
+}
+
 void defineLevel(){
 	int lvl = 0;
 
@@ -170,38 +182,42 @@ void chooseWord(){
 
 void addWord(){
 	char want;
-	printf("Você deseja adicionar alguma palavra no jogo(S/N)? ");
+	printf("Você deseja adicionar alguma palavra no jogo(S/N)?\n");
 	fflush(stdout);
-	scanf("%c", &want);
+	scanf(" %c", &want);
 	fflush(stdout);
 
 	if(want == 's'){
 		char new_word[WORD_SIZE];
 		printf("Digite a nova palavra: ");
 		fflush(stdout);
-		scanf("%c", new_word);
+		scanf(" %s", new_word);
 		fflush(stdout);
 
-		FILE* f;
+		if(validateWord(new_word)){
+			FILE* f;
 
-		f = fopen("words.txt", "r+"); //a stands for append
-		if(f == 0){
-			printf("Banco de palavras não disponível.\n\n");
-			exit(1);
+			f = fopen("words.txt", "r+"); //a stands for append
+			if(f == 0){
+				printf("Banco de palavras não disponível.\n\n");
+				exit(1);
+			}
+
+			int qtd;
+			fscanf(f, "%d", &qtd);
+			fflush(stdout);
+			qtd++;
+			fseek(f, 0, SEEK_SET);
+			fprintf(f, "%d", qtd);
+			fflush(stdout);
+
+			fseek(f, 0, SEEK_END);
+			fprintf(f, "\n%s", new_word);
+			fflush(stdout);
+			fclose(f);
+		}else{
+			printf("fudeu");
 		}
-
-		int qtd;
-		fscanf(f, "%d", &qtd);
-		fflush(stdout);
-		qtd++;
-		fseek(f, 0, SEEK_SET);
-		fprintf(f, "%d", qtd);
-		fflush(stdout);
-
-		fseek(f, 0, SEEK_END);
-		fprintf(f, "\n%s", new_word);
-		fflush(stdout);
-		fclose(f);
 	}
 }
 
