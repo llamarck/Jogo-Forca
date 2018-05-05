@@ -20,10 +20,10 @@ int level;
 
 int validateWord(char word[]){
 	int i;
-	int lower = 0;
-	for(i = 0; i <= strlen(word); i++){
+	int lower = 1;
+	for(i = 0; i < strlen(word); i++){
 		if(((int)word[i] < 65) || ((int)word[i] > 90)){
-			lower = 1;
+			lower = 0;
 			break;
 		}
 	}
@@ -224,7 +224,8 @@ void addWord(){
 				break;
 			}else{
 				printf("Insira apenas palavras com letra MAIÚSCULA.\n");
-				printf("%d", new_word[0]);
+				int a = new_word[0];
+				printf("este é o valor como inteiro na asci: %d", a);
 			}
 		}
 	}
