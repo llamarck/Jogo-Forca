@@ -21,5 +21,6 @@ int letterExists(char letter);
 int wrongAttempts();
 void addWord();
 void defineLevel();
+int validadeWord();
 
 #endif /* FORCA_H_ */

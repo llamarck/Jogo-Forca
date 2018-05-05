@@ -1,6 +1,7 @@
 6
-melancia
-uva
-amanda
-morango
-budira
+MELANCIA
+UVA
+AMANDA
+MORANGO
+BUDIRA
+teste
