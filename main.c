@@ -18,7 +18,13 @@ char secret_word[WORD_SIZE];
 int level;
 //declaração de funções globais
 
-int validateWord(char word[]){
+int validateWord(){
+	FILE * f;
+	f = fopen("words.txt", "r");
+
+}
+
+int validateCase(char word[]){
 	int i;
 	int lower = 1;
 	for(i = 0; i < strlen(word); i++){
@@ -197,7 +203,7 @@ void addWord(){
 			scanf(" %s", new_word);
 			fflush(stdout);
 
-			if(validateWord(new_word)){
+			if(validateCase(new_word)){
 				FILE* f;
 
 				f = fopen("words.txt", "r+"); //a stands for append

@@ -22,5 +22,6 @@ int wrongAttempts();
 void addWord();
 void defineLevel();
 int validadeWord();
+int validadeCase();
 
 #endif /* FORCA_H_ */
