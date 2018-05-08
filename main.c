@@ -18,10 +18,23 @@ char secret_word[WORD_SIZE];
 int level;
 //declaração de funções globais
 
-int validateWord(){
+int validateWord(char new_word[]){
 	FILE * f;
 	f = fopen("words.txt", "r");
+	int flag = 1;
+	int total;
+	fscanf(f, "%d", &total);
+	char word[WORD_SIZE];
 
+	int i;
+	for(i = 0; i <= total; i++){
+		fscanf(f, "%s", word);
+		if((strcmp(word, new_word)) == 0){
+			flag = 0;
+			break;
+		}
+	}
+	return flag;
 }
 
 int validateCase(char word[]){
@@ -99,7 +112,6 @@ void opening(){
 
 void guessing(){
 	char guess;
-	//guesses[30];
 	printf("Chute uma letra: ");
 	fflush(stdout);
 	scanf(" %c", &guess);
@@ -162,9 +174,8 @@ void draw(){
 
 void chooseWord(){
 	int number_words;
-	FILE* f; //declara o ponteiro
-	f = fopen("words.txt", "r"); //passa o arquivo e o modo (reading, no caso)
-	//sprintf(secret_word, "developer");
+	FILE* f;
+	f = fopen("words.txt", "r");
 	if(f == 0){
 		printf("Banco de dados de palavras não disponível.\n\n");
 		fflush(stdout);
@@ -182,8 +193,6 @@ void chooseWord(){
 		fflush(stdout);
 	}
 	fclose(f);
-	/*char word[50];
-	fscanf(f, "%s", word);*/
 }
 
 void addWord(){
@@ -203,10 +212,14 @@ void addWord(){
 			scanf(" %s", new_word);
 			fflush(stdout);
 
-			if(validateCase(new_word)){
+			/*if(!validateWord(new_word)){
+				printf("A palavra %s já existe!", new_word);
+			}*/
+
+			if((validateCase(new_word)) && (validateWord(new_word))){
 				FILE* f;
 
-				f = fopen("words.txt", "r+"); //a stands for append
+				f = fopen("words.txt", "r+");
 				if(f == 0){
 					printf("Banco de palavras não disponível.\n\n");
 					exit(1);
@@ -229,9 +242,7 @@ void addWord(){
 				printf("%s adicionada com sucesso!", new_word);
 				break;
 			}else{
-				printf("Insira apenas palavras com letra MAIÚSCULA.\n");
-				int a = new_word[0];
-				printf("este é o valor como inteiro na asci: %d", a);
+				printf("Insira apenas palavras com letra MAIÚSCULA e palavras que não existem.\n");
 			}
 		}
 	}
@@ -248,14 +259,7 @@ int main(){
 		draw();
 		guessing();
 
-		/*for(; i < strlen(secret_word); i++){ //diz a posição e se existe a letra!
-			if(secret_word[i] == guess){
-				printf("A posição %d tem esta letra!\n", i+1);
-				fflush(stdout);
-			}
-		}*/
-
-	} while(!win() && !hang()); //executa isto enquanto não tiver acertado ou sido enforcado
+	} while(!win() && !hang());
 
 	if(win()) {
 			printf("\nParabéns, você ganhou!\n\n");
