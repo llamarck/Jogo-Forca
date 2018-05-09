@@ -23,5 +23,7 @@ void addWord();
 void defineLevel();
 int validadeWord();
 int validadeCase();
+void drawWin();
+void drawHang();
 
 #endif /* FORCA_H_ */

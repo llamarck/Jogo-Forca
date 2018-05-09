@@ -18,6 +18,38 @@ char secret_word[WORD_SIZE];
 int level;
 //declaração de funções globais
 
+void drawWin(){
+	printf("       ___________      \n");
+	printf("      '._==_==_=_.'     \n");
+	printf("      .-\\:      /-.    \n");
+	printf("     | (|:.     |) |    \n");
+	printf("      '-|:.     |-'     \n");
+	printf("        \\::.    /      \n");
+	printf("         '::. .'        \n");
+	printf("           ) (          \n");
+	printf("         _.' '._        \n");
+	printf("        '-------'       \n\n");
+}
+
+void drawHang(){
+    printf("    _______________         \n");
+    printf("   /               \\       \n");
+    printf("  /                 \\      \n");
+    printf("//                   \\/\\  \n");
+    printf("\\|   XXXX     XXXX   | /   \n");
+    printf(" |   XXXX     XXXX   |/     \n");
+    printf(" |   XXX       XXX   |      \n");
+    printf(" |                   |      \n");
+    printf(" \\__      XXX      __/     \n");
+    printf("   |\\     XXX     /|       \n");
+    printf("   | |           | |        \n");
+    printf("   | I I I I I I I |        \n");
+    printf("   |  I I I I I I  |        \n");
+    printf("   \\_             _/       \n");
+    printf("     \\_         _/         \n");
+    printf("       \\_______/           \n");
+}
+
 int validateWord(char new_word[]){
 	FILE * f;
 	f = fopen("words.txt", "r");
@@ -212,10 +244,6 @@ void addWord(){
 			scanf(" %s", new_word);
 			fflush(stdout);
 
-			/*if(!validateWord(new_word)){
-				printf("A palavra %s já existe!", new_word);
-			}*/
-
 			if((validateCase(new_word)) && (validateWord(new_word))){
 				FILE* f;
 
@@ -241,8 +269,10 @@ void addWord(){
 				valid = 1;
 				printf("%s adicionada com sucesso!", new_word);
 				break;
-			}else{
-				printf("Insira apenas palavras com letra MAIÚSCULA e palavras que não existem.\n");
+			}else if(!validateCase(new_word)){
+				printf("Insira apenas palavras com letra MAIÚSCULA.\n");
+			}else if(!validateWord(new_word)){
+				printf("Insira apenas palavras que AINDA NÃO EXISTAM no banco de palavras.\n");
 			}
 		}
 	}
@@ -263,41 +293,12 @@ int main(){
 
 	if(win()) {
 			printf("\nParabéns, você ganhou!\n\n");
-
-		    printf("       ___________      \n");
-		    printf("      '._==_==_=_.'     \n");
-		    printf("      .-\\:      /-.    \n");
-		    printf("     | (|:.     |) |    \n");
-		    printf("      '-|:.     |-'     \n");
-		    printf("        \\::.    /      \n");
-		    printf("         '::. .'        \n");
-		    printf("           ) (          \n");
-		    printf("         _.' '._        \n");
-		    printf("        '-------'       \n\n");
-
+		    drawWin();
 			addWord();
-
 		 }else{
 		    printf("\nVocê foi enforcado!\n");
-
 		    printf("A palavra era **%s**\n\n", secret_word);
-
-		    printf("    _______________         \n");
-		    printf("   /               \\       \n");
-		    printf("  /                 \\      \n");
-		    printf("//                   \\/\\  \n");
-		    printf("\\|   XXXX     XXXX   | /   \n");
-		    printf(" |   XXXX     XXXX   |/     \n");
-		    printf(" |   XXX       XXX   |      \n");
-		    printf(" |                   |      \n");
-		    printf(" \\__      XXX      __/     \n");
-		    printf("   |\\     XXX     /|       \n");
-		    printf("   | |           | |        \n");
-		    printf("   | I I I I I I I |        \n");
-		    printf("   |  I I I I I I  |        \n");
-		    printf("   \\_             _/       \n");
-		    printf("     \\_         _/         \n");
-		    printf("       \\_______/           \n");
+		    drawHang();
 		 }
 
 	return 0;
