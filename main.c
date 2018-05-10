@@ -16,7 +16,36 @@ int attempts = 0;
 char all_guesses[30];
 char secret_word[WORD_SIZE];
 int level;
+int score;
+char nome[WORD_SIZE];
 //declaração de funções globais
+
+void saveScore(){
+	int qtd = 0;
+	score = attempts - wrongAttempts();
+
+	FILE * f;
+	f = fopen("ranking.txt", "r+");
+
+	printf("Digite seu nome: ");
+	scanf(" %s", nome);
+	fflush(stdout);
+
+
+	fscanf(f, "%d", &qtd);
+	fflush(stdout);
+	qtd++;
+	fseek(f, 0, SEEK_SET);
+	fprintf(f, "%04d", qtd);
+	fflush(stdout);
+
+	fseek(f, 0, SEEK_END);
+	fprintf(f, "\n%s %d", nome, score);
+	fflush(stdout);
+	fclose(f);
+
+	printf(" %s, você pontuou %d!\n", nome, score);
+}
 
 void drawWin(){
 	printf("       ___________      \n");
@@ -258,7 +287,7 @@ void addWord(){
 				fflush(stdout);
 				qtd++;
 				fseek(f, 0, SEEK_SET);
-				fprintf(f, "%d", qtd);
+				fprintf(f, "%04d", qtd);
 				fflush(stdout);
 
 				fseek(f, 0, SEEK_END);
@@ -267,7 +296,7 @@ void addWord(){
 				fclose(f);
 
 				valid = 1;
-				printf("%s adicionada com sucesso!", new_word);
+				printf("%s adicionada com sucesso!\n", new_word);
 				break;
 			}else if(!validateCase(new_word)){
 				printf("Insira apenas palavras com letra MAIÚSCULA.\n");
@@ -284,14 +313,13 @@ int main(){
 	defineLevel();
 	chooseWord();
 
-
-	do {
+	do{
 		draw();
 		guessing();
 
-	} while(!win() && !hang());
+	}while(!win() && !hang());
 
-	if(win()) {
+	if(win()){
 			printf("\nParabéns, você ganhou!\n\n");
 		    drawWin();
 			addWord();
@@ -300,6 +328,6 @@ int main(){
 		    printf("A palavra era **%s**\n\n", secret_word);
 		    drawHang();
 		 }
-
+	saveScore();
 	return 0;
 }

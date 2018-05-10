@@ -25,5 +25,6 @@ int validadeWord();
 int validadeCase();
 void drawWin();
 void drawHang();
+void saveScore();
 
 #endif /* FORCA_H_ */
