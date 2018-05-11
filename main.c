@@ -28,7 +28,8 @@ void saveScore(){
 	f = fopen("ranking.txt", "r+");
 
 	printf("Digite seu nome: ");
-	scanf(" %s", nome);
+	fflush(stdout);
+	scanf("%s", nome);
 	fflush(stdout);
 
 
@@ -44,7 +45,7 @@ void saveScore(){
 	fflush(stdout);
 	fclose(f);
 
-	printf(" %s, você pontuou %d!\n", nome, score);
+	printf("%s, você pontuou %d!\n", nome, score);
 }
 
 void drawWin(){
