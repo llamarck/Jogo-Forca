@@ -1,7 +1,3 @@
-0006
-DUBIRA 3
-T 2
-TAPIR 5
-DUBIRO 6
-DUDE 6
-Marduk 7
+0002
+Amanda 7
+Leonis 4
